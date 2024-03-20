@@ -1,22 +1,11 @@
-
 #include <uapi/linux/bpf.h>
-#include <uapi/linux/ptrace.h>
-#include <uapi/linux/if_ether.h>
+#include <bpf/bpf_tracing.h>
+#include <bpf/bpf_helpers.h>
 #define __attribute_const__ __attribute__((const))
-#include <uapi/linux/ip.h>
-#include <bpf/bpf_helpers.h>
-#include <bpf/bpf_tracing.h>
-
-#include <stddef.h>
-
-#include <uapi/linux/bpf.h>
-#include <uapi/linux/ptrace.h>
 #include <uapi/linux/if_ether.h>
-#include <uapi/linux/ip.h>
-#include <bpf/bpf_helpers.h>
-#include <bpf/bpf_tracing.h>
-
 #include <stddef.h>
+#include <uapi/linux/ip.h>
+#include <uapi/linux/ptrace.h>
 
 #define PTR_AT(ctx, offset, type) \
     (((void *)(long)(ctx)->data + (offset) + sizeof(type) <= (void *)(long)(ctx)->data_end) ? \

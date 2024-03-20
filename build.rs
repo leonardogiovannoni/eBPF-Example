@@ -4,10 +4,7 @@ fn main() {
     println!("cargo:rerun-if-changed=bpf/hello_world_bpf.c");
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let out_path = out_dir.join("hello_world_bpf.o");
-    println!(
-        "cargo:rustc-env=CONFIG_DAT_PATH={}",
-        out_path.display()
-    );
+
     let kernel_release = Command::new("uname")
         .arg("-r")
         .output()
@@ -34,6 +31,12 @@ fn main() {
             bpf_source_file,
             "-o",
         ])
-        .arg(out_path);
-    command.status().expect("Failed to compile BPF source file");
+        .arg(out_path.clone());
+    let a = command.status().expect("Failed to compile BPF source file");
+    // print just to see the command
+
+    println!(
+        "cargo:rustc-env=CONFIG_DAT_PATH={}",
+        out_path.display()
+    );
 }
