@@ -32,8 +32,10 @@ fn main() {
             "-o",
         ])
         .arg(out_path.clone());
-    let a = command.status().expect("Failed to compile BPF source file");
-    // print just to see the command
+    
+    if !command.status().expect("Failed to compile BPF source file").success() {
+        panic!("Failed to compile BPF source file");
+    }
 
     println!(
         "cargo:rustc-env=CONFIG_DAT_PATH={}",
